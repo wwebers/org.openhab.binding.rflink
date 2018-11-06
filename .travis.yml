@@ -1,14 +1,13 @@
 language: java
 before_deploy:
-  - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
   - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
-  - export project_artifact=$(mvn help:evaluate -N -Dexpression=project.artifactId|grep -v '\[')
 deploy:
   provider: releases
   api_key:
     secure: ulKFVNIwq2s36fRKakma78vh65Bc8lTRbV4ngZzQdQ0K64n8xsLN1BDnQXZK/zoEuJsp/ITjtskcOie0UxeRFw52MieOkuPHYVdpG++lcb4guYmSLEVS8EMVRpLppnybs0T9gywIambKyrIlS/oekpO7YHMElbCsU5zdIeMdW2AXQIQSnn3hC/Zw3uEX3zIJKlOBBQiAErdYujDyzKo0COtnTU0O3TrFIdDXL7HAbf6n80GfLCcCGieYqXj6QhtO9JwuJmrYJy15lhYgmoY5t0tVhT2J500pVsK5oAoWj94qj3y8sv1358gKnVQIR6zH7UQQ69Js4f+0kHHwH54kpFkCz/6vp91DCaz5Wt5O+J5S+UYB2y5b/vTP1cN91M1aT2MWioTfxespinMLxiQRuKSiMuKXpru+4GTPyCsSrzn5Fwx+ui9aojeWPR006vlc9StXIY/oUTRZRoPSj+YylH/j/CFonS6Ft98KjlfTk8l24MUr5EZoLdDsfk0tH4MJ9z/hGAP7J2ULpQ0+IXkqWM/6aL9sH6d2I7Bc+0dXITxtJ8rnTwVOLV4F0D+SDfyONO9eJqOM/exx+NMqvSFJgufhg7UHAcNvQNm7wja5DTCQsdNERMZPBU4w/TLmG7MutcMyx4I7Z1sLoDdzZksfjR9CmqPF/LoRBvpOOgJCP4E=
-  file: target/*.jar
+  file: ${TRAVIS_BUILD_DIR}/target/*.jar
   skip_cleanup: true
   on:
     repo: cartemere/org.openhab.binding.rflink
-  name: Build $(date +'%d.%m.%Y %R') - v${project_version} - CommitId ${TRAVIS_COMMIT}
+  name: Build $(date +'%d.%m.%Y %R') - v${project_version}
+  body: Commit ${TRAVIS_COMMIT} - ${TRAVIS_COMMIT_MESSAGE}
