@@ -5,7 +5,9 @@ before_deploy:
   - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
   - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
   - export project_artifactId=$(mvn help:evaluate -N -Dexpression=project.artifactId|grep -v '\[')
-  - export project_output_jar=$(find ./target -name "*.jar")
+  - export project_output_jar=$(find target -name "${project_artifactId}*.jar")
+  - export project_output_full_jar = ${TRAVIS_BUILD_DIR}/${project_output_jar}
+  - echo "full jar ${project_output_full_jar}"
 deploy:
   provider: releases
   api_key:
