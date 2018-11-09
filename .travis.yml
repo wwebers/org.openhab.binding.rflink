@@ -1,8 +1,11 @@
 language: java
+git:
+  quiet: true
 before_deploy:
   - mvn help:evaluate -N -Dexpression=project.version|grep -v '\['
   - export project_version=$(mvn help:evaluate -N -Dexpression=project.version|grep -v '\[')
   - export project_artifactId=$(mvn help:evaluate -N -Dexpression=project.artifactId|grep -v '\[')
+  - export project_output_jar=$(find ./target -name "*.jar")
 deploy:
   provider: releases
   api_key:
@@ -12,4 +15,4 @@ deploy:
   on:
     repo: cartemere/org.openhab.binding.rflink
   name: Travis Build '#'${TRAVIS_BUILD_NUMBER} $(date +'%d.%m.%Y %R') - v${project_version}
-  body: Travis Build '#'${TRAVIS_BUILD_NUMBER} at ${TRAVIS_BUILD_WEB_URL}\nCommit Id '#'${TRAVIS_COMMIT}\nCommit Message ${TRAVIS_COMMIT_MESSAGE} \nCommits Included '#'${TRAVIS_COMMIT_RANGE}
+  body: Travis Build '#'${TRAVIS_BUILD_NUMBER} at ${TRAVIS_BUILD_WEB_URL} Commit Id '#'${TRAVIS_COMMIT} Commit Message ${TRAVIS_COMMIT_MESSAGE}  Commits Included '#'${TRAVIS_COMMIT_RANGE} Output path ${project_output_jar}
