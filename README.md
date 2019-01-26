@@ -1,6 +1,6 @@
 ﻿# RFLink binding for OpenHAB 2.0
 
-[![Build Status](https://travis-ci.org/wwebers/org.openhab.binding.rflink.svg?branch=master)](https://travis-ci.org/wwebers/org.openhab.binding.rflink)
+[![Build Status](https://travis-ci.com/wwebers/org.openhab.binding.rflink.svg?branch=master)](https://travis-ci.org/wwebers/org.openhab.binding.rflink)
 
 This repository contains a binding for [OpenHAB 2.0](https://github.com/openhab/openhab-distro) that deals with [RFLink Gateway](http://www.nemcon.nl/blog2/).
 
