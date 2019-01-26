@@ -133,12 +133,12 @@ public class RfLinkBridgeHandler extends BaseBridgeHandler {
         try {
 
             if (connector == null) {
-                connector = new RfLinkSerialConnector(configuration.sendDelay);
+                connector = new RfLinkSerialConnector();
             }
 
             if (connector != null) {
                 connector.disconnect();
-                connector.connect(configuration.serialPort, configuration.baudRate);
+                connector.connect(configuration.serialPort, configuration.baudRate, configuration.sendDelay);
                 connector.addEventListener(eventListener);
                 logger.debug("RFLink receiver started");
                 updateStatus(ThingStatus.ONLINE);

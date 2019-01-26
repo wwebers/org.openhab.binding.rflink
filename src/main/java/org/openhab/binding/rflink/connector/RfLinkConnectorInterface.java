@@ -25,7 +25,7 @@ public interface RfLinkConnectorInterface {
      *                   Controller connection parameters (e.g. serial port name or IP
      *                   address).
      */
-    public void connect(String device, int baudRate) throws Exception;
+    public void connect(String device, int baudRate, int sendDelay) throws Exception;
 
     /**
      * Procedure for disconnecting to RFLink controller.

@@ -57,16 +57,13 @@ public class RfLinkSerialConnector implements RfLinkConnectorInterface, SerialPo
     // delay between messages
     private int sendDelay;
 
-    private static long lastSend = 0;
-
-    public RfLinkSerialConnector(int sendDelay) {
+    public RfLinkSerialConnector() {
 
         logger.debug("RfLinkRxTxConnector() with send delay of {}ms", sendDelay);
-        this.sendDelay = sendDelay;
     }
 
     @Override
-    public void connect(String comPort, int baudRate) throws Exception {
+    public void connect(String comPort, int baudRate, int sendDelay) throws Exception {
 
         logger.debug("connect({})", comPort);
 
@@ -114,6 +111,8 @@ public class RfLinkSerialConnector implements RfLinkConnectorInterface, SerialPo
             logger.error("{}", e.toString());
             sendErrorToListeners("Unhandled exception " + e.toString());
         }
+
+        this.sendDelay = sendDelay;
     }
 
     @Override
@@ -153,24 +152,25 @@ public class RfLinkSerialConnector implements RfLinkConnectorInterface, SerialPo
         }
 
         synchronized (this) {
+            /**
+             * TODO: RFLink confirms every with a OK message (e.g. 20;0D;OK)
+             * Instead of creating a delay, we should actively wait for the response and
+             * resend the message after a predefined timeout
+             */
 
             for (String message : messages) {
-                long towait = sendDelay - (System.currentTimeMillis() - lastSend);
-                towait = Math.min(Math.max(towait, 0), sendDelay);
-
                 byte[] messageData = (message + RfLinkBindingConstants.NEW_LINE).getBytes();
-                logger.debug("Send data (after {}ms, len={}): {}", towait, messageData.length,
+                logger.debug("Send data (after {}ms, len={}): {}", sendDelay, messageData.length,
                         DatatypeConverter.printHexBinary(messageData));
-                if (towait > 0) {
+                if (sendDelay > 0) {
                     try {
-                        Thread.sleep(towait);
+                        Thread.sleep(sendDelay);
                     } catch (InterruptedException ignore) {
                     }
                 }
 
                 output.write(messageData);
                 output.flush();
-                lastSend = System.currentTimeMillis();
             }
         }
     }
