@@ -15,6 +15,7 @@ import org.openhab.binding.rflink.RfLinkBindingConstants;
  *
  * @author Cyril Cauchois - Initial contribution
  * @author Marvyn Zalewski - added disableDiscovery Configuration
+ * @author Wolfram Webers - added delay configuration
  */
 public class RfLinkBridgeConfiguration {
 
@@ -29,4 +30,7 @@ public class RfLinkBridgeConfiguration {
 
     // Prevent unknown devices from being added to the inbox
     public boolean disableDiscovery;
+
+    // Configurable delay between messages sent out
+    public int sendDelay = RfLinkBindingConstants.SEND_DELAY;
 }

@@ -37,7 +37,7 @@ public interface RfLinkConnectorInterface {
      * Procedure for sending messages data to RFLink controller.
      * Can handle multiple messages at a time (for composite commands)
      *
-     * @param data
+     * @param messagesData
      *                 raw bytes.
      */
     public void sendMessages(Collection<String> messagesData) throws IOException;

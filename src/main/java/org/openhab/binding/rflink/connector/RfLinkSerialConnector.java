@@ -55,13 +55,14 @@ public class RfLinkSerialConnector implements RfLinkConnectorInterface, SerialPo
     private static final int TIME_OUT = 2000;
 
     // delay between messages
-    private static final int SEND_DELAY = 50;
+    private int sendDelay;
 
     private static long lastSend = 0;
 
-    public RfLinkSerialConnector() {
+    public RfLinkSerialConnector(int sendDelay) {
 
-        logger.debug("RfLinkRxTxConnector()");
+        logger.debug("RfLinkRxTxConnector() with send delay of {}ms", sendDelay);
+        this.sendDelay = sendDelay;
     }
 
     @Override
@@ -154,8 +155,8 @@ public class RfLinkSerialConnector implements RfLinkConnectorInterface, SerialPo
         synchronized (this) {
 
             for (String message : messages) {
-                long towait = SEND_DELAY - (System.currentTimeMillis() - lastSend);
-                towait = Math.min(Math.max(towait, 0), SEND_DELAY);
+                long towait = sendDelay - (System.currentTimeMillis() - lastSend);
+                towait = Math.min(Math.max(towait, 0), sendDelay);
 
                 byte[] messageData = (message + RfLinkBindingConstants.NEW_LINE).getBytes();
                 logger.debug("Send data (after {}ms, len={}): {}", towait, messageData.length,

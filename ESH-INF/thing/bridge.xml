@@ -23,6 +23,12 @@
 				<label>Disable Discovery</label>
 				<description>Set true if it should not discover to Inbox.</description>
 			</parameter>
+
+			<parameter name="sendDelay" type="integer" required="false">
+				<label>Send Delay</label>
+				<description>Specify a delay (in milliseconds) between two messages (default is 50ms).</description>
+			</parameter>
+
 		</config-description>
 	</bridge-type>
 

@@ -133,7 +133,7 @@ public class RfLinkBridgeHandler extends BaseBridgeHandler {
         try {
 
             if (connector == null) {
-                connector = new RfLinkSerialConnector();
+                connector = new RfLinkSerialConnector(configuration.sendDelay);
             }
 
             if (connector != null) {
